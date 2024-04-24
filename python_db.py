@@ -1,23 +1,31 @@
-import sys
 import mysql.connector
 from mysql.connector import Error
 from tabulate import tabulate
 
-def connect_db(host, user, password, database):
+# Constants for database connection
+DB_HOST = 'localhost'
+DB_USER = 'amnak'
+DB_PASS = 'ooSh9Phu'
+DB_NAME = 'amnak'  # Using the database named 'amnak' based on your MySQL command
+
+def connect_db():
+    """Connect to the MySQL database."""
     try:
-        conn = mysql.connector.connect(host=host, user=user, password=password, database=database)
+        conn = mysql.connector.connect(host=DB_HOST, user=DB_USER, password=DB_PASS, database=DB_NAME)
         print("Database connection established")
         return conn
     except Error as e:
-        print(f"Error connecting to MySQL Database: {e}")
+        print(f"Error: {e}")
         return None
 
 def close_db(conn):
-    if conn.is_connected():
+    """Close the database connection."""
+    if conn and conn.is_connected():
         conn.close()
         print("Database connection closed")
 
 def execute_query(conn, query, args=None):
+    """Execute a query (insert, update, delete)."""
     cursor = conn.cursor()
     try:
         cursor.execute(query, args)
@@ -25,16 +33,21 @@ def execute_query(conn, query, args=None):
         print("Query successful")
     except Error as e:
         print(f"Failed to execute query: {e}")
+    finally:
+        cursor.close()
 
 def fetch_query(conn, query, args=None):
+    """Fetch results from a select query."""
     cursor = conn.cursor()
     try:
         cursor.execute(query, args)
         results = cursor.fetchall()
-        return tabulate(results, headers=[desc[0] for desc in cursor.description], tablefmt='html')
+        return tabulate(results, headers=[x[0] for x in cursor.description], tablefmt='html')
     except Error as e:
         print(f"Failed to fetch data: {e}")
         return None
+    finally:
+        cursor.close()
 
 def add_game(conn, team_id1, team_id2, score1, score2, game_date):
     query = """
