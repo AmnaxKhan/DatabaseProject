@@ -1,68 +1,111 @@
+import sys
 import mysql.connector
+from mysql.connector import Error
 from tabulate import tabulate
 
+def connect_db(host, user, password, database):
+    try:
+        conn = mysql.connector.connect(host=host, user=user, password=password, database=database)
+        print("Database connection established")
+        return conn
+    except Error as e:
+        print(f"Error connecting to MySQL Database: {e}")
+        return None
 
-def open_database(hostname, user_name, mysql_pw, database_name):
-    global conn
-    conn = mysql.connector.connect(host=hostname,
-                                   user=user_name,
-                                   password=mysql_pw,
-                                   database=database_name
-                                   )
-    global cursor
+def close_db(conn):
+    if conn.is_connected():
+        conn.close()
+        print("Database connection closed")
+
+def execute_query(conn, query, args=None):
     cursor = conn.cursor()
+    try:
+        cursor.execute(query, args)
+        conn.commit()
+        print("Query successful")
+    except Error as e:
+        print(f"Failed to execute query: {e}")
 
+def fetch_query(conn, query, args=None):
+    cursor = conn.cursor()
+    try:
+        cursor.execute(query, args)
+        results = cursor.fetchall()
+        return tabulate(results, headers=[desc[0] for desc in cursor.description], tablefmt='html')
+    except Error as e:
+        print(f"Failed to fetch data: {e}")
+        return None
 
-def printFormat(result):
-    header = []
-    for cd in cursor.description:  # get headers
-        header.append(cd[0])
-    print('')
-    print('Query Result:')
-    print('')
-    return(tabulate(result, headers=header))  # print results in table format
+def add_game(conn, team_id1, team_id2, score1, score2, game_date):
+    query = """
+    INSERT INTO Game (TeamId1, TeamId2, Score1, Score2, Date)
+    VALUES (%s, %s, %s, %s, %s)
+    """
+    execute_query(conn, query, (team_id1, team_id2, score1, score2, game_date))
 
-# select and display query
+def add_player(conn, team_id, name, position):
+    query = """
+    INSERT INTO Player (TeamId, Name, Position)
+    VALUES (%s, %s, %s)
+    """
+    execute_query(conn, query, (team_id, name, position))
 
+def view_players_by_team(conn, team_id):
+    query = "SELECT * FROM Player WHERE TeamId = %s"
+    return fetch_query(conn, query, (team_id,))
 
-def executeSelect(query):
-    cursor.execute(query)
-    res = printFormat(cursor.fetchall())
-    return res
+def view_players_by_position(conn, position):
+    query = "SELECT * FROM Player WHERE Position = %s"
+    return fetch_query(conn, query, (position,))
 
+def view_teams_by_conference(conn):
+    query = """
+    SELECT Conference, TeamId, Location, Nickname, COUNT(GameId) AS Wins
+    FROM Team JOIN Game ON Team.TeamId = Game.WinningTeamId
+    GROUP BY Conference, TeamId
+    ORDER BY Conference, Wins DESC
+    """
+    return fetch_query(conn, query)
 
-def insert(table, values):
-    query = "INSERT into " + table + " values (" + values + ")" + ';'
-    cursor.execute(query)
-    conn.commit()
+def view_games_by_team(conn, team_id):
+    query = """
+    SELECT g.Date, t.Location, t.Nickname, g.Score1, g.Score2
+    FROM Game g
+    JOIN Team t ON g.TeamId1 = t.TeamId OR g.TeamId2 = t.TeamId
+    WHERE t.TeamId = %s
+    """
+    return fetch_query(conn, query, (team_id,))
 
+def view_results_by_date(conn, game_date):
+    query = "SELECT * FROM Game WHERE Date = %s"
+    return fetch_query(conn, query, (game_date,))
 
-def nextId(table):
-    query = "select IFNULL(max(ID), 0) as max_id from " + table
-    cursor.execute(query)
-    result = cursor.fetchall()[0][0]
-    return 1 if result is None else int(result) + 1
+if __name__ == "__main__":
+    host = sys.argv[1]
+    user = sys.argv[2]
+    password = sys.argv[3]
+    database = sys.argv[4]
+    operation = sys.argv[5]
+    args = sys.argv[6:]
 
+    conn = connect_db(host, user, password, database)
+    if not conn:
+        sys.exit("Database connection failed")
 
-def executeUpdate(query):  # use this function for delete and update
-    cursor.execute(query)
-    conn.commit()
-
-
-def close_db():  # use this function to close db
-    cursor.close()
-    conn.close()
-
-
-###   TEST #####
-# mysql_username = 'replaceIt' # please change to your MySQL username
-# mysql_password ='replaceIt'  # please change to your MySQL password
-# open_database('localhost',mysql_username,mysql_password,mysql_username) # open database   
-# executeSelect('SELECT * FROM ITEM'); # This is just a sample test, replace with your query
-# insert('ITEM',"'jbg',22,23.5,1 ")# This is just a sample test, replace with your query
-# executeSelect('SELECT * FROM ITEM where supplier_id = 22;')# checking if the value is updated
-# executeUpdate('delete from ITEM where supplier_id = 22;')# testing delete
-# executeSelect('SELECT * FROM ITEM where supplier_id = 22;')# checking if the id = 22 does not exist
-# # executeUpdate("Update SUPPLIER set supplier_id = 20 where address ='Yemen';")# testing update
-# # executeSelect("SELECT * FROM SUPPLIER where address = 'Yemen';")# checking the updated value
-# close_db()# close database
+    try:
+        if operation == "add_game":
+            add_game(conn, *args)
+        elif operation == "add_player":
+            add_player(conn, *args)
+        elif operation == "view_players_by_team":
+            print(view_players_by_team(conn, *args))
+        elif operation == "view_players_by_position":
+            print(view_players_by_position(conn, *args))
+        elif operation == "view_teams_by_conference":
+            print(view_teams_by_conference(conn))
+        elif operation == "view_games_by_team":
+            print(view_games_by_team(conn, *args))
+        elif operation == "view_results_by_date":
+            print(view_results_by_date(conn, *args))
+    finally:
+        close_db(conn)

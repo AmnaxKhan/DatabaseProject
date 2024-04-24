@@ -44,8 +44,8 @@
     <div id="menu">
         <h3>Choose an option:</h3>
         <ul>
-            <li><a href="#">1) Add a game to the Game table</a></li>
-            <li><a href="#">2) Add a player to Player table</a></li>
+            <li><a href="add_game.php">1) Add a game to the Game table</a></li>
+            <li><a href="add_player.php">2) Add a player to Player table</a></li>
             <li><a href="#">3) View all the players on a team</a></li>
             <li><a href="#">4) View all players in a given position on any team</a></li>
             <li><a href="#">5) View all teams arranged by conference</a></li>
