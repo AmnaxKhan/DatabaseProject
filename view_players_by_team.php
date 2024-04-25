@@ -13,10 +13,9 @@
 <?php
 if (isset($_POST['submit'])) {
     $team_id = escapeshellarg($_POST['team_id']);
-
-    $command = "python3 view_players_by_team.py $team_id";
+    $command = "python3 ./view_players_by_team.py $team_id";
     $output = shell_exec($command);
-    echo "<pre>$output</pre>";
+    echo $output;  // Assuming the output is safe HTML
 }
 ?>
 </body>

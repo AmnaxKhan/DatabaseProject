@@ -14,7 +14,7 @@
 if (isset($_POST['submit'])) {
     $date = escapeshellarg($_POST['date']);
 
-    $command = escapeshellcmd("python3 python_db.py localhost amnak ooSh9Phu amnak view_results_by_date $date");
+    $command = "python3 view_results_by_date.py $date";
     $output = shell_exec($command);
     echo "<pre>$output</pre>";
 }

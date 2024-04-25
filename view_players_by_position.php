@@ -13,10 +13,8 @@
 <?php
 if (isset($_POST['submit'])) {
     $position = escapeshellarg($_POST['position']);
-
-    $command = "python3 view_players_by_position.py $position";
-    $output = shell_exec($command);
-    echo "<pre>$output</pre>";
+    $output = shell_exec("python3 ./view_players_by_position.py $position");
+    echo $output;
 }
 ?>
 </body>
