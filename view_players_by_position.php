@@ -14,7 +14,7 @@
 if (isset($_POST['submit'])) {
     $position = escapeshellarg($_POST['position']);
 
-    $command = escapeshellcmd("python3 python_db.py localhost amnak ooSh9Phu nfl_database view_players_by_position $position");
+    $command = "python3 view_players_by_position.py $position";
     $output = shell_exec($command);
     echo "<pre>$output</pre>";
 }

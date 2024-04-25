@@ -50,7 +50,7 @@
             <li><a href="view_players_by_position.php">4) View all players in a given position on any team</a></li>
             <li><a href="view_teams_by_conference.php">5) View all teams arranged by conference</a></li>
             <li><a href="view_games_by_team.php">6) View all games played by a given team</a></li>
-            <li><a href="#">7) View all results on a given date</a></li>
+            <li><a href="view_results_by_date.php">7) View all results on a given date</a></li>
         </ul>
     </div>
     

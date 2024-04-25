@@ -4,7 +4,7 @@
     <title>Add Player</title>
 </head>
 <body>
-<h3>Add a Player:</h3>
+<h3>Add a Player to the NFL Database:</h3>
 <form action="add_player.php" method="post">
     Team ID: <input type="text" name="team_id"><br>
     Name: <input type="text" name="name"><br>
@@ -18,8 +18,10 @@ if (isset($_POST['submit'])) {
     $name = escapeshellarg($_POST['name']);
     $position = escapeshellarg($_POST['position']);
 
-    $command = escapeshellcmd("python3 python_db.py localhost amnak ooSh9Phu nfl_database add_player $team_id $name $position");
-    $output = shell_exec($command);
+    // Command to run Python script
+    $command = "python3 insert_player.py $team_id $name $position";
+    $escaped_command = escapeshellcmd($command);
+    $output = shell_exec($escaped_command);
     echo "<pre>$output</pre>";
 }
 ?>
