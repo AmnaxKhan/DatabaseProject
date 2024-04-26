@@ -2,9 +2,9 @@ mysql <<EOFMYSQL
 use amnak;
 show tables;
 
-DROP TABLE Team; 
-DROP TABLE Game; 
 DROP TABLE Player; 
+DROP TABLE Game; 
+DROP TABLE Team; 
 
 CREATE TABLE Team (
     TeamId INT AUTO_INCREMENT PRIMARY KEY,

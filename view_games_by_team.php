@@ -2,6 +2,34 @@
 <html>
 <head>
     <title>View Games by Team</title>
+    <style>
+        .back-button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black; /* Black borders for table cells */
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2; /* Light grey background for headers */
+        }
+    </style>
 </head>
 <body>
 <h3>View Games by Team:</h3>
@@ -19,5 +47,8 @@ if (isset($_POST['submit'])) {
     echo "<pre>$output</pre>";
 }
 ?>
+<!-- Back Button to Home Page -->
+<button class="back-button" onclick="window.location.href='python_function.php'">Go to Home Page</button>
+
 </body>
 </html>

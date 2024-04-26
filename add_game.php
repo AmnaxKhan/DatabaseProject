@@ -2,6 +2,21 @@
 <html>
 <head>
     <title>Add Game</title>
+    <style>
+        .back-button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
 <h3>Add a Game:</h3>
@@ -27,5 +42,9 @@ if (isset($_POST['submit'])) {
     echo "<pre>$output</pre>";
 }
 ?>
+
+<!-- Back Button to Home Page -->
+<button class="back-button" onclick="window.location.href='python_function.php'">Go to Home Page</button>
+
 </body>
 </html>

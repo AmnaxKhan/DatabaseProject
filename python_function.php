@@ -44,13 +44,13 @@
     <div id="menu">
         <h3>Choose an option:</h3>
         <ul>
-            <li><a href="add_game.php">1) Add a game to the Game table</a></li>
-            <li><a href="add_player.php">2) Add a player to Player table</a></li>
-            <li><a href="view_players_by_team.php">3) View all the players on a team</a></li>
-            <li><a href="view_players_by_position.php">4) View all players in a given position on any team</a></li>
-            <li><a href="view_teams_by_conference.php">5) View all teams arranged by conference</a></li>
-            <li><a href="view_games_by_team.php">6) View all games played by a given team</a></li>
-            <li><a href="view_results_by_date.php">7) View all results on a given date</a></li>
+            <li><a href="add_game.php">Add a game to the Game table</a></li>
+            <li><a href="add_player.php">Add a player to Player table</a></li>
+            <li><a href="view_players_by_team.php">View all the players on a team</a></li>
+            <li><a href="view_players_by_position.php">View all players in a given position on any team</a></li>
+            <li><a href="view_teams_by_conference.php">View all teams arranged by conference</a></li>
+            <li><a href="view_games_by_team.php">View all games played by a given team</a></li>
+            <li><a href="view_results_by_date.php">View all results on a given date</a></li>
         </ul>
     </div>
     
