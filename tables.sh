@@ -33,6 +33,17 @@ CREATE TABLE Player (
     FOREIGN KEY (TeamId) REFERENCES Team(TeamId) ON DELETE CASCADE
 );
 
+CREATE TABLE PlayerStats (
+    StatId INT AUTO_INCREMENT PRIMARY KEY,
+    GameId INT,
+    PlayerId INT,
+    Touchdowns INT,
+    Passes INT,
+    Tackles INT,
+    FOREIGN KEY (GameId) REFERENCES Game(GameId),
+    FOREIGN KEY (PlayerId) REFERENCES Player(PlayerId)
+);
+
 INSERT INTO Team (Location, Nickname, Conference, Division) VALUES
     ('Kansas City', 'Chiefs', 'AFC', 'West'),
     ('Tampa Bay', 'Buccaneers', 'NFC', 'South'),
@@ -49,6 +60,11 @@ INSERT INTO Player (TeamId, Name, Position) VALUES
     (2, 'Tom Brady', 'Quarterback'),
     (3, 'Mac Jones', 'Quarterback'),
     (4, 'Aaron Rodgers', 'Quarterback');
+
+INSERT INTO PlayerStats (GameId, PlayerId, Touchdowns, Passes, Tackles) VALUES
+(1, 1, 3, 30, 0),
+(2, 2, 2, 25, 0),
+(1, 3, 0, 0, 5);
 
 
 EOFMYSQL
