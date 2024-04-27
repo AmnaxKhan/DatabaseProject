@@ -13,14 +13,14 @@ def close_database(conn):
     if conn and conn.is_connected():
         conn.close()
 
-def select_game():
+def select_team():
     conn = open_database()
     if not conn:
         return "<p>Error: Database connection could not be established.</p>"
     
     cursor = conn.cursor()
     query = """
-    SELECT * FROM Game
+    SELECT * FROM Team
     """
     try:
         cursor.execute(query)
@@ -28,11 +28,11 @@ def select_game():
         cursor.close()
         close_database(conn)
         if records:
-            return tabulate(records, headers=['Team ID 1', 'Team ID 2', 'Score 1', 'Score 2', 'Date'], tablefmt='html')
+            return tabulate(records, headers=['Location', 'Nickname', 'Conference', 'Division'], tablefmt='html')
         else:
             return "<p>No team data found.</p>"
     except mysql.connector.Error as e:
         return f"<p>SQL Error: {e}</p>"
 
 if __name__ == "__main__":
-    print(select_game())
+    print(select_team())

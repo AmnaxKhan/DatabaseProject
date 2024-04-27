@@ -2,21 +2,7 @@
 <html>
 <head>
     <title>Add Player</title>
-    <style>
-        .back-button {
-            background-color: #4CAF50; /* Green */
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 10px 2px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="Style.css">
 </head>
 <body>
 <h3>Add a Player to the NFL Database:</h3>
@@ -40,6 +26,14 @@ if (isset($_POST['submit'])) {
     echo "<pre>$output</pre>";
 }
 ?>
+
+<h3>Player Table:</h3> <!-- Header to signal the Game Table -->
+<?php
+$command = "python3 select_player.py 2>&1";  // Redirect stderr to stdout
+$output = shell_exec($command);
+echo $output ? "<div>$output</div>" : "<p>Error executing Python script.</p>";
+?>
+
 <!-- Back Button to Home Page -->
 <button class="back-button" onclick="window.location.href='python_function.php'">Go to Home Page</button>
 
