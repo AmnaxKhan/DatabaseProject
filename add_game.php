@@ -74,9 +74,21 @@ if (isset($_POST['submit'])) {
     $score2 = escapeshellarg($_POST['score2']);
     $date = escapeshellarg($_POST['date']);
 
-    $command = "python3 insert_game.py $team_id1 $team_id2 $score1 $score2 $date";
-    $output = shell_exec($command);
-    echo "<pre>$output</pre>";
+    // Validate team IDs
+    $validate_command1 = "python3 check_team_exists.py $team_id1";
+    $validate_command2 = "python3 check_team_exists.py $team_id2";
+    $output1 = shell_exec($validate_command1);
+    $output2 = shell_exec($validate_command2);
+
+    if (strpos($output1, "No such team exists") !== false || strpos($output2, "No such team exists") !== false) {
+        echo "<script>alert('One or both team IDs do not exist. Please enter a valid team ID.');</script>";
+    } else {
+        // Proceed with adding the game
+        $add_command = "python3 insert_game.py $team_id1 $team_id2 $score1 $score2 $date"; 
+        $output = shell_exec($add_command);
+        echo "<pre>$output</pre>";
+    }
+
 }
 ?>
 <h3>Game Table:</h3> <!-- Header to signal the Game Table -->

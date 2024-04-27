@@ -19,11 +19,20 @@ if (isset($_POST['submit'])) {
     $name = escapeshellarg($_POST['name']);
     $position = escapeshellarg($_POST['position']);
 
-    // Command to run Python script
-    $command = "python3 insert_player.py $team_id $name $position";
-    $escaped_command = escapeshellcmd($command);
-    $output = shell_exec($escaped_command);
-    echo "<pre>$output</pre>";
+    // Validate team IDs
+    $validate_command1 = "python3 check_team_exists.py $team_id";
+    $output1 = shell_exec($validate_command1);
+
+    if (strpos($output1, "No such team exists") !== false || strpos($output2, "No such team exists") !== false) {
+        echo "<script>alert('Team ID does not exist. Please enter a valid team ID.');</script>";
+    } else {
+        // Proceed with adding the game
+        $command = "python3 insert_player.py $team_id $name $position";
+        $escaped_command = escapeshellcmd($command);
+        $output = shell_exec($escaped_command);
+        echo "<pre>$output</pre>";
+    }
+    
 }
 ?>
 
