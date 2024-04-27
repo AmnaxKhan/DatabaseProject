@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Add Game</title>
+    <title>Add Team</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -56,37 +56,27 @@
     </style>
 </head>
 <body>
-<h3>Add a Game:</h3>
-<form action="add_game.php" method="post">
-    Team ID 1: <input type="text" name="team_id1"><br>
-    Team ID 2: <input type="text" name="team_id2"><br>
-    Score 1: <input type="text" name="score1"><br>
-    Score 2: <input type="text" name="score2"><br>
-    Date (YYYY-MM-DD): <input type="text" name="date"><br>
-    <input type="submit" name="submit" value="Add Game">
+<h2>Add a New Team</h2>
+<form action="add_team.php" method="post">
+    Location: <input type="text" name="location"><br>
+    Nickname: <input type="text" name="nickname"><br>
+    Conference: <input type="text" name="conference"><br>
+    Division: <input type="text" name="division"><br>
+    <button type="submit" name="submit">Add Team</button>
 </form>
-
 <?php
 if (isset($_POST['submit'])) {
-    $team_id1 = escapeshellarg($_POST['team_id1']);
-    $team_id2 = escapeshellarg($_POST['team_id2']);
-    $score1 = escapeshellarg($_POST['score1']);
-    $score2 = escapeshellarg($_POST['score2']);
-    $date = escapeshellarg($_POST['date']);
+    $location = escapeshellarg($_POST['location']);
+    $nickname = escapeshellarg($_POST['nickname']);
+    $conference = escapeshellarg($_POST['conference']);
+    $division = escapeshellarg($_POST['division']);
 
-    $command = "python3 insert_game.py $team_id1 $team_id2 $score1 $score2 $date";
+    $command = "python3 add_team.py $location $nickname $conference $division";
     $output = shell_exec($command);
     echo "<pre>$output</pre>";
 }
 ?>
-<h3>Game Table:</h3> <!-- Header to signal the Game Table -->
-<?php
-$command = "python3 select_game.py 2>&1";  // Redirect stderr to stdout
-$output = shell_exec($command);
-echo $output ? "<div>$output</div>" : "<p>Error executing Python script.</p>";
-?>
 <!-- Back Button to Home Page -->
 <button class="back-button" onclick="window.location.href='python_function.php'">Go to Home Page</button>
-
 </body>
 </html>

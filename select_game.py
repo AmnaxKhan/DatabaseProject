@@ -1,0 +1,38 @@
+import mysql.connector
+from tabulate import tabulate
+
+def open_database():
+    try:
+        conn = mysql.connector.connect(host='localhost', user='amnak', password='ooSh9Phu', database='amnak')
+        return conn
+    except mysql.connector.Error as e:
+        print(f"Error connecting to MySQL Database: {e}")
+        return None
+
+def close_database(conn):
+    if conn and conn.is_connected():
+        conn.close()
+
+def view_teams_by_conference():
+    conn = open_database()
+    if not conn:
+        return "<p>Error: Database connection could not be established.</p>"
+    
+    cursor = conn.cursor()
+    query = """
+    SELECT * FROM Game
+    """
+    try:
+        cursor.execute(query)
+        records = cursor.fetchall()
+        cursor.close()
+        close_database(conn)
+        if records:
+            return tabulate(records, headers=['Team ID 1', 'Team ID 2', 'Score 1', 'Score 2', 'Date'], tablefmt='html')
+        else:
+            return "<p>No team data found.</p>"
+    except mysql.connector.Error as e:
+        return f"<p>SQL Error: {e}</p>"
+
+if __name__ == "__main__":
+    print(view_teams_by_conference())

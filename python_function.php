@@ -74,6 +74,7 @@
             <ul>
                 <li><a href="add_game.php">Add a game to the Game table</a></li>
                 <li><a href="add_player.php">Add a player to Player table</a></li>
+                <li><a href="add_team.php">Add a Team to the Team table</a></li>
                 <li><a href="view_players_by_team.php">View all the players on a team</a></li>
                 <li><a href="view_players_by_position.php">View all players in a given position on any team</a></li>
                 <li><a href="view_teams_by_conference.php">View all teams arranged by conference</a></li>
