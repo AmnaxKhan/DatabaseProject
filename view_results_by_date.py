@@ -11,13 +11,34 @@ def close_database(conn):
 def view_results_by_date(game_date):
     conn = open_database()
     cursor = conn.cursor()
-    query = "SELECT * FROM Game WHERE Date = %s"
+    query = """
+    SELECT 
+        t1.Location AS 'Home Location', 
+        t1.Nickname AS 'Home Nickname', 
+        t2.Location AS 'Away Location', 
+        t2.Nickname AS 'Away Nickname', 
+        g.Score1 AS 'Home Score', 
+        g.Score2 AS 'Away Score',
+        CASE
+            WHEN g.Score1 > g.Score2 THEN t1.Nickname
+            WHEN g.Score1 < g.Score2 THEN t2.Nickname
+            ELSE 'Tie'
+        END AS 'Winner'
+    FROM 
+        Game g
+    JOIN 
+        Team t1 ON g.TeamId1 = t1.TeamId
+    JOIN 
+        Team t2 ON g.TeamId2 = t2.TeamId
+    WHERE 
+        g.Date = %s
+    """
     cursor.execute(query, (game_date,))
     records = cursor.fetchall()
     cursor.close()
     close_database(conn)
     if records:
-        return tabulate(records, headers=['Game ID', 'Team ID 1', 'Team ID 2', 'Score 1', 'Score 2', 'Date'], tablefmt='html')
+        return tabulate(records, headers=['Home Location', 'Home Nickname', 'Away Location', 'Away Nickname', 'Home Score', 'Away Score', 'Winner'], tablefmt='html')
     else:
         return "<p>No games found on this date.</p>"
 

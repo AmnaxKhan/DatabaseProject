@@ -5,15 +5,22 @@
     <link rel="stylesheet" type="text/css" href="Style.css">
 </head>
 <body>
-<h3>View Games by Team:</h3>
+<h3>Select a Team to View Games</h3>
 <form action="view_games_by_team.php" method="post">
-    Team ID: <input type="text" name="team_id"><br>
+    <label for="team-nickname">Choose a Team:</label>
+    <select name="team-nickname" id="team-nickname">
+        <?php
+        $command = escapeshellcmd("python3 get_team_nicknames.py");
+        $output = shell_exec($command);
+        echo $output;
+        ?>
+    </select>
     <input type="submit" name="submit" value="View Games">
 </form>
 
 <?php
 if (isset($_POST['submit'])) {
-    $team_id = escapeshellarg($_POST['team_id']);
+    $team_id = escapeshellarg($_POST['team-nickname']);
 
     $command = "python3 view_games_by_team.py $team_id";
     $output = shell_exec($command);
