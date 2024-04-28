@@ -5,14 +5,15 @@
     <link rel="stylesheet" type="text/css" href="Style.css">
 </head>
 <body>
-<h2>Add a New Team</h2>
-<form action="insert_team.php" method="post">
+<h3>Add a New Team</h3>
+<form action="add_team.php" method="post">
     Location: <input type="text" name="location"><br>
     Nickname: <input type="text" name="nickname"><br>
     Conference: <input type="text" name="conference"><br>
     Division: <input type="text" name="division"><br>
     <button type="submit" name="submit">Add Team</button>
 </form>
+
 <?php
 if (isset($_POST['submit'])) {
     $location = escapeshellarg($_POST['location']);

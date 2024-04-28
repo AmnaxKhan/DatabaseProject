@@ -2,6 +2,7 @@ mysql <<EOFMYSQL
 use amnak;
 show tables;
 
+DROP TABLE PlayerStats;
 DROP TABLE Player; 
 DROP TABLE Game; 
 DROP TABLE Team; 
