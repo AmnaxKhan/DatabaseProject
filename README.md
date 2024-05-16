@@ -10,12 +10,6 @@ The goal of this project is to create a web application that utilizes a relation
 - **Database Management System (DBMS):** MySQL or any other relational database package accessible 24/7 over the web.
 - **Database Schema:** The database should include tables for teams, games, and players, with appropriate attributes for each.
 - **Web Server:** Apache or any other web server that is publicly accessible 24/7.
-- **Website Features:** The website should support at least 7 functions, such as adding games or players, viewing team information, and more. Optionally, a bonus 8th function can be added.
-
-## Implementation
-- **Database Setup:** Create the necessary tables and seed them with sample data.
-- **Web Interface:** Develop web pages to interact with the database, allowing users to perform the required functions.
-- **Programming Language:** Use any programming language for the backend and frontend development.
 
 ## Usage
 - Clone the repository.
