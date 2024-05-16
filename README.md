@@ -1,5 +1,5 @@
 # NFL Database Project
-- **URL:** https://csce.uark.edu/~amnak/NFL_database/home.php 
+https://csce.uark.edu/~amnak/NFL_database/home.php 
 
 This project aims to create a website with a web front end connected to a relational database backend. The website allows users to interact with NFL football team data, including adding games and players, viewing team and player information, and more.
 
