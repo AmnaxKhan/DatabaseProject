@@ -84,7 +84,7 @@
             </ul>
         </div>
         <div id="image-container">
-            <img src="nfl.png" alt="NFL Themed Image">
+            <img src="images/nfl.png" alt="NFL Themed Image">
         </div>
     </div>
 </body>

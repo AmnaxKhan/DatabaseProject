@@ -13,7 +13,7 @@ $output = shell_exec($command);
 echo $output ? "<div>$output</div>" : "<p>Error executing Python script.</p>";
 ?>
 <!-- Back Button to Home Page -->
-<button class="back-button" onclick="window.location.href='python_function.php'">Go to Home Page</button>
+<button class="back-button" onclick="window.location.href='home.php'">Go to Home Page</button>
 
 </body>
 </html>

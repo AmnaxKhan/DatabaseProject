@@ -1,3 +1,3 @@
 # DatabaseProject
-https://csce.uark.edu/~amnak/project_python/python_function.php 
+https://csce.uark.edu/~amnak/NFL_database/home.php 
 
